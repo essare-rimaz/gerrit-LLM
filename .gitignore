@@ -1,0 +1,13 @@
+/.docker
+/.vscode
+/.vscode-server
+/letsencrypt
+/.cache
+/.ssh
+/.bash_history
+/.bashrc
+/.cloud-locale-test.skip
+.profile
+.viminfo
+.wget-hsts
+.script.sh.swp
