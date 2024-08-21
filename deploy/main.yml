@@ -4,9 +4,9 @@
   tasks:
     - name: checkout repository
       ansible.builtin.git:
-        repo: '{{ rasa_repo }}'
+        repo: '{{ gerrit_repo }}'
         dest: '{{ checkout_path }}'
-        version: '{{ rasa_branch }}'
+        version: '{{ gerrit_branch }}'
         force: true
     - name: Config containers
       tags: config
