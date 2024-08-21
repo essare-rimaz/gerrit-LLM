@@ -1,0 +1,16 @@
+---
+# Variables needed to deploy
+
+# repo information
+gerrit_repo: "{{ lookup('ansible.builtin.env', 'GERRIT_REPO', default='https://github.com/essare-rimaz/gerrit-LLM.git') }}"
+gerrit_branch: main
+checkout_path: /root/
+# droplet information
+droplet_ip: "{{ lookup('ansible.builtin.env', 'DROPLET_IP', default='46.101.158.212') }}"
+
+# other vars
+facebook_page_access_token: "{{ lookup('ansible.builtin.env', 'FACEBOOK_PAGE_ACCESS_TOKEN', default='secret') }}"
+facebook_secret: "{{ lookup('ansible.builtin.env', 'FACEBOOK_SECRET', default='secret') }}"
+facebook_verify: "{{ lookup('ansible.builtin.env', 'FACEBOOK_VERIFY', default='secret') }}"
+
+korvus_database_url: "{{ lookup('ansible.builtin.env', 'KORVUS_DATABASE_URL', default='secret') }}"

@@ -1,0 +1,24 @@
+---
+- name: Deploy to droplet
+  hosts: droplet
+  tasks:
+    - name: checkout repository
+      ansible.builtin.git:
+        repo: '{{ rasa_repo }}'
+        dest: '{{ checkout_path }}'
+        version: '{{ rasa_branch }}'
+        force: true
+    - name: Config containers
+      tags: config
+      block:
+        - name: Template docker_compose.yml.j2
+          ansible.builtin.template:
+            src: templates/docker_compose.yml.j2
+            dest: '{{ checkout_path }}/docker_compose.yml'
+    - name: Deploy containers
+      tags: deploy
+      block:
+        - name: run docker compose
+          ansible.builtin.shell: docker compose up -d
+          args:
+            chdir: '{{ checkout_path }}'
