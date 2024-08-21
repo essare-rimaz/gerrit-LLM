@@ -13,8 +13,8 @@
       block:
         - name: Template docker_compose.yml.j2
           ansible.builtin.template:
-            src: templates/docker_compose.yml.j2
-            dest: '{{ checkout_path }}/docker_compose.yml'
+            src: templates/docker-compose.yml.j2
+            dest: '{{ checkout_path }}/docker-compose.yml'
     - name: Deploy containers
       tags: deploy
       block:
