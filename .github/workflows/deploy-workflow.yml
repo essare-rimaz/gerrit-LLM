@@ -1,7 +1,7 @@
 ---
 # make another step which would be build & push
-name: Build & Push containers
-run-name: Building & Pushing containers
+name: Build & Push images, Run containers
+run-name: Building & Pushing images, Running containers
 on:
   push:
     branches: [main]
@@ -26,18 +26,12 @@ jobs:
           push: true
           tags: essare164/fastapi-gerrit:latest
 
-name: Deploy containers
-run-name: Deploying containers
-on:
-  push:
-    branches: [main]
-jobs:
-  docker:
+  docker_compose:
     runs-on: ubuntu-latest
     environment: deploy
     steps:
-      - name: Run playbook
       - uses: actions/checkout@v3
+      - name: Run playbook
         env:
           DROPLET_IP: ${{ vars.DROPLET_IP }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
