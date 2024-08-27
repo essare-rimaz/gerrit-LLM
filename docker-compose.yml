@@ -46,6 +46,17 @@ services:
       - "traefik.docker.network=root_traefik_network"
     networks:
       - "traefik_network"
+  streamlit:
+    image: "essare164/streamlit"
+    container_name: "streamlit"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.streamlit.rule=Host(`streamlit.erasmusbot.cz`)"
+      - "traefik.http.routers.streamlit.entrypoints=websecure"
+      - "traefik.http.routers.streamlit.tls.certresolver=myresolver"
+      - "traefik.docker.network=root_traefik_network"
+    networks:
+      - "traefik_network"
   fastapi:
     image: "essare164/fastapi-gerrit"
     container_name: "fastapi-gerrit"
