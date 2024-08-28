@@ -47,7 +47,7 @@ services:
     networks:
       - "traefik_network"
   streamlit:
-    image: "essare164/streamlit"
+    image: "essare164/streamlit-gerrit"
     container_name: "streamlit"
     labels:
       - "traefik.enable=true"
