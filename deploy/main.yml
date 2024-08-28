@@ -2,11 +2,17 @@
 - name: Deploy to droplet
   hosts: droplet
   tasks:
-    - name: checkout repository
+    - name: checkout gerrit repository
       ansible.builtin.git:
         repo: '{{ gerrit_repo }}'
         dest: '{{ checkout_path }}'
         version: '{{ gerrit_branch }}'
+        force: true
+    - name: checkout streamlit repository
+      ansible.builtin.git:
+        repo: '{{ streamlit_repo }}'
+        dest: '{{ streamlit_checkout_path }}'
+        version: '{{ streamlit_branch }}'
         force: true
     - name: Config containers
       tags: config
