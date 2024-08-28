@@ -49,6 +49,7 @@ jobs:
 
 
   docker_compose:
+    needs: [docker_fast_api, docker_streamlit]
     runs-on: ubuntu-latest
     environment: deploy
     steps:
