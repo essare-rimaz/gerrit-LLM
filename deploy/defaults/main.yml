@@ -3,13 +3,9 @@
 
 # repo information
 gerrit_repo: "{{ lookup('ansible.builtin.env', 'GERRIT_REPO', default='https://github.com/essare-rimaz/gerrit-LLM.git') }}"
-streamlit_repo: "{{ lookup('ansible.builtin.env', 'STREAMLIT_REPO', default='https://github.com/tomaspycha/esn-prague-ball.git') }}"
 
 gerrit_branch: main
 checkout_path: /root/
-
-streamlit_branch: main
-streamlit_checkout_path: /root/streamlit
 
 # droplet information
 droplet_ip: "{{ lookup('ansible.builtin.env', 'DROPLET_IP', default='46.101.158.212') }}"
