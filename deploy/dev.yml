@@ -1,0 +1,27 @@
+---
+- name: Deploy to droplet
+  hosts: droplet
+  tasks:
+    - name: Config base containers
+      tags: config
+      block:
+        - name: Template docker_compose-base.yml.j2
+          ansible.builtin.template:
+            src: templates/docker-compose-base.yml.j2
+            dest: '{{ checkout_path }}/docker-compose-base.yml'
+
+    - name: Config dev containers
+      tags: config
+      block:
+        - name: Template docker_compose-dev.yml.j2
+          ansible.builtin.template:
+            src: templates/docker-compose-dev.yml.j2
+            dest: '{{ checkout_path }}/docker-compose-dev.yml'
+
+    - name: Deploy containers
+      tags: deploy
+      block:
+        - name: run docker compose
+          ansible.builtin.shell: docker compose -f docker-compose-base.yml -f docker-compose-dev.yml up -d
+          args:
+            chdir: '{{ checkout_path }}'

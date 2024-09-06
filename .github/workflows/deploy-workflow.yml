@@ -4,7 +4,7 @@ name: Build & Push images, Run containers
 run-name: Building & Pushing images, Running containers
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
 jobs:
   docker_fast_api:
     runs-on: ubuntu-latest
@@ -19,12 +19,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
+        name: Build and push main
+        if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v6
         with:
           context: ./fast_api
           push: true
-          tags: essare164/fastapi-gerrit:latest
+          tags: essare164/fastapi-gerrit:latest, essare164/fastapi-gerrit:${{ github.sha }}
+
+      -
+        name: Build and push dev
+        if: github.ref == 'refs/heads/dev'
+        uses: docker/build-push-action@v6
+        with:
+          context: ./fast_api
+          push: true
+          tags: essare164/fastapi-gerrit:dev, essare164/fastapi-gerrit:dev-${{ github.sha }}
 
   docker_compose:
     needs: [docker_fast_api]
@@ -32,7 +42,8 @@ jobs:
     environment: deploy
     steps:
       - uses: actions/checkout@v3
-      - name: Run playbook
+      - name: Run prod playbook
+        if: github.ref == 'refs/heads/main'
         env:
           DROPLET_IP: ${{ vars.DROPLET_IP }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
@@ -42,7 +53,26 @@ jobs:
         uses: dawidd6/action-ansible-playbook@v2
         with:
           # Required, playbook filepath
-          playbook: deploy/main.yml
+          playbook: deploy/prod.yml
+          # Optional, SSH private key
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          # Optional, additional flags to pass to ansible-playbook
+          options: |-
+            --inventory deploy/hosts.yml
+            --extra-vars @deploy/defaults/main.yml 
+            --verbose
+      - name: Run dev playbook
+        if: github.ref == 'refs/heads/main'
+        env:
+          DROPLET_IP: ${{ vars.DROPLET_IP }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_SECRET: ${{ secrets.FACEBOOK_SECRET }}
+          FACEBOOK_VERIFY: ${{ secrets.FACEBOOK_VERIFY }}
+          KORVUS_DATABASE_URL: ${{ secrets.KORVUS_DATABASE_URL }}
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          # Required, playbook filepath
+          playbook: deploy/dev.yml
           # Optional, SSH private key
           key: ${{secrets.SSH_PRIVATE_KEY}}
           # Optional, additional flags to pass to ansible-playbook
