@@ -23,7 +23,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v6
         with:
-          context: ./fast_api
+          context: "{{defaultContext}}:fast_api"
           push: true
           tags: essare164/fastapi-gerrit:latest, essare164/fastapi-gerrit:${{ github.sha }}
 
@@ -32,7 +32,7 @@ jobs:
         if: github.ref == 'refs/heads/dev'
         uses: docker/build-push-action@v6
         with:
-          context: ./fast_api
+          context: "{{defaultContext}}:fast_api"
           push: true
           tags: essare164/fastapi-gerrit:dev, essare164/fastapi-gerrit:dev-${{ github.sha }}
 
