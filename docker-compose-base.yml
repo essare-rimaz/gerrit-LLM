@@ -1,7 +1,6 @@
 # on why network has {network_name} which is defined in networks key for each service
 # but we also have a "traefik.docker.network" label where there is {project}_{network_name}
 # https://community.traefik.io/t/traefik-docker-network-doesnt-work-its-always-random/21015/2
-version: "3.3"
 
 services:
   traefik:
@@ -35,40 +34,6 @@ services:
       - "traefik.docker.network=root_traefik_network"
     networks:
       - "traefik_network"
-  whoami:
-    image: "traefik/whoami"
-    container_name: "simple-service"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`whoami.erasmusbot.cz`)"
-      - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
-      - "traefik.docker.network=root_traefik_network"
-    networks:
-      - "traefik_network"
-  streamlit:
-    image: "essare164/streamlit-gerrit"
-    container_name: "streamlit"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.streamlit.rule=Host(`streamlit.erasmusbot.cz`)"
-      - "traefik.http.routers.streamlit.entrypoints=websecure"
-      - "traefik.http.routers.streamlit.tls.certresolver=myresolver"
-      - "traefik.docker.network=root_traefik_network"
-    networks:
-      - "traefik_network"
-  fastapi:
-    image: "essare164/fastapi-gerrit"
-    container_name: "fastapi-gerrit"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.fastapi.rule=Host(`fastapi.erasmusbot.cz`)"
-      - "traefik.http.routers.fastapi.entrypoints=websecure"
-      - "traefik.http.routers.fastapi.tls.certresolver=myresolver"
-      - "traefik.docker.network=root_traefik_network"
-    networks:
-      - "traefik_network"
-
 networks:
   traefik_network:
     driver: "bridge"
