@@ -62,7 +62,7 @@ jobs:
             --extra-vars @deploy/defaults/main.yml 
             --verbose
       - name: Run dev playbook
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/dev'
         env:
           DROPLET_IP: ${{ vars.DROPLET_IP }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
