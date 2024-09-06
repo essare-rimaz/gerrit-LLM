@@ -1,7 +1,7 @@
 services:
   whoami:
     image: "traefik/whoami"
-    container_name: "dev-simple-service"
+    container_name: "simple-service"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`whoami.prod.erasmusbot.cz`)"
@@ -12,7 +12,7 @@ services:
       - "traefik_network"
   streamlit:
     image: "essare164/streamlit-gerrit"
-    container_name: "dev-streamlit"
+    container_name: "streamlit"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.streamlit.rule=Host(`streamlit.prod.erasmusbot.cz`)"
@@ -23,7 +23,7 @@ services:
       - "traefik_network"
   fastapi:
     image: "essare164/fastapi-gerrit"
-    container_name: "dev-fastapi-gerrit"
+    container_name: "fastapi-gerrit"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.fastapi.rule=Host(`fastapi.prod.erasmusbot.cz`)"
