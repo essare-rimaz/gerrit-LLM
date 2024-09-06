@@ -1,0 +1,39 @@
+# on why network has {network_name} which is defined in networks key for each service
+# but we also have a "traefik.docker.network" label where there is {project}_{network_name}
+# https://community.traefik.io/t/traefik-docker-network-doesnt-work-its-always-random/21015/2
+
+services:
+  traefik:
+    image: "traefik:v3.1"
+    container_name: "traefik"
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.web.address=:80"
+      - "--entryPoints.websecure.address=:443"
+      - "--api.dashboard=true"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=richard.mazur9@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "443:443"
+
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+      - "./logs/:/logs/"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routes.traefik.entrypoiints=websecure"
+      - "traefik.http.routes.service=api@internal"
+      - "traefik.http.routers.traefik.tls.certresolver=myresolver"
+      - "traefik.docker.network=root_traefik_network"
+    networks:
+      - "traefik_network"
+networks:
+  traefik_network:
+    driver: "bridge"
