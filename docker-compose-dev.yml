@@ -1,5 +1,5 @@
 services:
-  whoami:
+  dev_whoami:
     image: "traefik/whoami"
     container_name: "dev-simple-service"
     labels:
@@ -10,7 +10,7 @@ services:
       - "traefik.docker.network=root_traefik_network"
     networks:
       - "traefik_network"
-  streamlit:
+  dev_streamlit:
     image: "essare164/streamlit-gerrit"
     container_name: "dev-streamlit"
     labels:
@@ -21,7 +21,7 @@ services:
       - "traefik.docker.network=root_traefik_network"
     networks:
       - "traefik_network"
-  fastapi:
+  dev_fastapi:
     image: "essare164/fastapi-gerrit"
     container_name: "dev-fastapi-gerrit"
     labels:
