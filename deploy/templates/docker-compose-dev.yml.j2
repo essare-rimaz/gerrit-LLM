@@ -8,6 +8,11 @@ services:
       - "traefik.http.routers.dev_whoami.entrypoints=websecure"
       - "traefik.http.routers.dev_whoami.tls.certresolver=myresolver"
       - "traefik.docker.network=root_traefik_network"
+      - "traefik.http.middlewares.test-ratelimit.ratelimit.average=3"
+      - "traefik.http.middlewares.test-ratelimit.ratelimit.burst=3"
+      - "traefik.http.middlewares.test-ratelimit.ratelimit.period=1m"
+      - "traefik.http.routers.dev_whoami.middlewares=test-ratelimit"
+
     networks:
       - "traefik_network"
   dev_streamlit:
