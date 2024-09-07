@@ -13,6 +13,19 @@ load_dotenv()
 
 from korvus import Collection, Pipeline
 import asyncio
+import sys
+
+
+def setup_logger(name):
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+    stream_handler = logging.StreamHandler(sys.stdout)
+    log_formatter = logging.Formatter("%(asctime)s [%(processName)s: %(process)d] [%(threadName)s: %(thread)d] [%(levelname)s] [%(funcName)s] %(name)s: %(message)s")
+    stream_handler.setFormatter(log_formatter)
+    logger.addHandler(stream_handler)
+    return logger
+
+logger = setup_logger(__name__)
 
 KORVUS_DATABASE_URL = os.environ["KORVUS_DATABASE_URL"]
 
@@ -67,12 +80,6 @@ async def rag(query):
     return results
 
 app = FastAPI(root_path="/api/v1")
-
-# Logging toolbox 🔊
-# TODO change logging level dynamically
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger("webhook")
-
 
 @app.get("/")
 async def index():
