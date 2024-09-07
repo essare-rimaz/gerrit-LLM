@@ -69,7 +69,8 @@ async def rag(query):
 app = FastAPI(root_path="/api/v1")
 
 # Logging toolbox 🔊
-logging.basicConfig(level=logging.INFO)
+# TODO change logging level dynamically
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("webhook")
 
 
