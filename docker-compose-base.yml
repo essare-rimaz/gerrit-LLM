@@ -9,6 +9,9 @@ services:
     command:
       - "--log.level=DEBUG"
       - "--api.insecure=true"
+      - "--accesslog=true"
+      - "--accesslog.bufferingsize=100"
+      - "--accesslog.filepath=./logs/access.log"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entryPoints.web.address=:80"
