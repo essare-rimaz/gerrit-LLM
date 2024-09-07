@@ -1,4 +1,4 @@
-fastapi[standard]
+"fastapi[standard]"
 pydantic
 requests
 korvus
