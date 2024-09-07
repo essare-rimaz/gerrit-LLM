@@ -117,9 +117,11 @@ async def trigger_response(request: Request) -> None:
         .encode()
     )
     app_secret = os.environ["FB_APP_SECRET"].encode()
+    logger.debug(app_secret)
     expected_signature = hmac.new(
         app_secret, payload, digestmod=hashlib.sha1
     ).hexdigest()
+    logger.debug(expected_signature)
     signature = request.headers["x-hub-signature"][5:]
     if not hmac.compare_digest(expected_signature, signature):
         raise HTTPException(status_code=403, detail="Message not authenticated.")
