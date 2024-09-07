@@ -29,6 +29,7 @@ services:
   dev_fastapi:
     image: "essare164/fastapi-gerrit:dev"
     container_name: "dev-fastapi-gerrit"
+    pull_policy: always
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.fastapi.rule=Host(`fastapi.dev.erasmusbot.cz`)"
