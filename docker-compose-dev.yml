@@ -27,7 +27,7 @@ services:
     networks:
       - "traefik_network"
   dev_fastapi:
-    image: "essare164/fastapi-gerrit"
+    image: "essare164/fastapi-gerrit:dev"
     container_name: "dev-fastapi-gerrit"
     labels:
       - "traefik.enable=true"
