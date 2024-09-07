@@ -1,5 +1,6 @@
-FROM python:3.9
+FROM redhat/ubi9 
 WORKDIR /app/
+RUN dnf install -y pip
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 COPY main.py /app/main.py
