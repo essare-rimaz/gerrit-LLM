@@ -4,9 +4,9 @@ services:
     container_name: "dev-simple-service"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`whoami.dev.erasmusbot.cz`)"
-      - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+      - "traefik.http.routers.dev_whoami.rule=Host(`whoami.dev.erasmusbot.cz`)"
+      - "traefik.http.routers.dev_whoami.entrypoints=websecure"
+      - "traefik.http.routers.dev_whoami.tls.certresolver=myresolver"
       - "traefik.docker.network=root_traefik_network"
     networks:
       - "traefik_network"
@@ -15,9 +15,9 @@ services:
     container_name: "dev-streamlit"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.streamlit.rule=Host(`streamlit.dev.erasmusbot.cz`)"
-      - "traefik.http.routers.streamlit.entrypoints=websecure"
-      - "traefik.http.routers.streamlit.tls.certresolver=myresolver"
+      - "traefik.http.routers.dev_streamlit.rule=Host(`streamlit.dev.erasmusbot.cz`)"
+      - "traefik.http.routers.dev_streamlit.entrypoints=websecure"
+      - "traefik.http.routers.dev_streamlit.tls.certresolver=myresolver"
       - "traefik.docker.network=root_traefik_network"
     networks:
       - "traefik_network"
