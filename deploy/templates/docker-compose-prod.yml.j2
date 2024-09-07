@@ -16,6 +16,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.streamlit.rule=Host(`streamlit.prod.erasmusbot.cz`)"
+      - "traefik.http.routers.streamlit.rule=Host(`streamlit.erasmusbot.cz`)"
       - "traefik.http.routers.streamlit.entrypoints=websecure"
       - "traefik.http.routers.streamlit.tls.certresolver=myresolver"
       - "traefik.docker.network=root_traefik_network"
